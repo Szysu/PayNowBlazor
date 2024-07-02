@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PayNowWeb.Infrastructure.Entities;
+using PayNowBlazor.Infrastructure.Entities;
 
-namespace PayNowWeb.Infrastructure;
+namespace PayNowBlazor.Infrastructure;
 
 public partial class DatabaseContext : DbContext
 {

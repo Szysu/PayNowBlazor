@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
-using PayNowWeb.Infrastructure;
+using PayNowBlazor.Infrastructure;
 
 #nullable disable
 
-namespace PayNowWeb.Infrastructure.Migrations
+namespace PayNowBlazor.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20240701183712_Initial")]

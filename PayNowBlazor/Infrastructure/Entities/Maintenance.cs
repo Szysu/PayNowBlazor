@@ -1,4 +1,4 @@
-﻿namespace PayNowWeb.Infrastructure.Entities;
+﻿namespace PayNowBlazor.Infrastructure.Entities;
 
 public class Maintenance
 {

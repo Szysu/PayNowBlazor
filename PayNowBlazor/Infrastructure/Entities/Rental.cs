@@ -1,6 +1,6 @@
 ﻿using NetTopologySuite.Geometries;
 
-namespace PayNowWeb.Infrastructure.Entities;
+namespace PayNowBlazor.Infrastructure.Entities;
 
 public class Rental
 {

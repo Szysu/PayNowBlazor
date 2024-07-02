@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
-using PayNowWeb.Infrastructure;
+using PayNowBlazor.Infrastructure;
 
 #nullable disable
 
-namespace PayNowWeb.Infrastructure.Migrations
+namespace PayNowBlazor.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot

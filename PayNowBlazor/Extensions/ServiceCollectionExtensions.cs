@@ -1,6 +1,6 @@
-﻿using PayNowWeb.Infrastructure;
+﻿using PayNowBlazor.Infrastructure;
 
-namespace PayNowWeb.Extensions;
+namespace PayNowBlazor.Extensions;
 
 public static class ServiceCollectionExtensions
 {

@@ -1,4 +1,4 @@
-﻿@page "/CustomersList"
+﻿@page "/ScootersList"
 @layout MainLayout
 
 @using Microsoft.EntityFrameworkCore
@@ -6,43 +6,35 @@
 @using PayNowBlazor.Infrastructure
 @using PayNowBlazor.Infrastructure.Entities
 
-<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Add new customer" Click="@InsertRow"/>
-<RadzenDataGrid @ref="CustomersGrid" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Add new scooter" Click="@InsertRow"/>
+<RadzenDataGrid @ref="ScootersGrid" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
 		AllowSorting="true" PageSize="10" AllowPaging="true" ShowPagingSummary="true" EditMode="DataGridEditMode.Single"
-		Data="@Customers" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or" 
+		Data="@Scooters" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or" 
 		SelectionMode="DataGridSelectionMode.Single">
 	<Columns>
-		<RadzenDataGridColumn Property="@nameof(Customer.Id)" Title="ID" Filterable="true" Frozen="true" TextAlign="TextAlign.Center"/>
-		<RadzenDataGridColumn Property="@nameof(Customer.PhotoUrl)" Title="Photo" Filterable="false" Frozen="true" TextAlign="TextAlign.Center">
-			<Template Context="customer">
-				<RadzenImage Path="@customer.PhotoUrl" AlternateText="@($"{customer.FirstName} {customer.LastName}")" class="rz-gravatar"/>
-			</Template>
-			<EditTemplate Context="customer">
-				<RadzenTextBox @bind-value="customer.PhotoUrl"/>
+		<RadzenDataGridColumn Property="@nameof(Scooter.Id)" Title="ID" Frozen="true" TextAlign="TextAlign.Center"/>
+		<RadzenDataGridColumn Property="@nameof(Scooter.Manufacturer)" Title="Manufacturer" TextAlign="TextAlign.Center">
+			<EditTemplate Context="scooter">
+				<RadzenTextBox @bind-value="scooter.Manufacturer"/>
 			</EditTemplate>
 		</RadzenDataGridColumn>
-		<RadzenDataGridColumn Property="@nameof(Customer.FirstName)" Title="First name" Filterable="true" Frozen="true" TextAlign="TextAlign.Center">
-			<EditTemplate Context="customer">
-				<RadzenTextBox @bind-value="customer.FirstName"/>
+		<RadzenDataGridColumn Property="@nameof(Scooter.Model)" Title="Model" TextAlign="TextAlign.Center">
+			<EditTemplate Context="scooter">
+				<RadzenTextBox @bind-value="scooter.Model"/>
 			</EditTemplate>
 		</RadzenDataGridColumn>
-		<RadzenDataGridColumn Property="@nameof(Customer.LastName)" Title="Last name" Filterable="true" Frozen="true" TextAlign="TextAlign.Center">
-			<EditTemplate Context="customer">
-				<RadzenTextBox @bind-value="customer.LastName"/>
-			</EditTemplate>
-		</RadzenDataGridColumn>
-		<RadzenDataGridColumn Context="customer" Filterable="false" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
-			<Template Context="customer">
+		<RadzenDataGridColumn Context="scooter" FrozenPosition="FrozenColumnPosition.Right">
+			<Template Context="scooter">
 				<RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" 
-						Click="@(_ => EditRow(customer))" @onclick:stopPropagation="true"/>
+						Click="@(_ => EditRow(scooter))"/>
 				<RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter" 
-						Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(_ => DeleteRow(customer))"/>
+						Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(_ => DeleteRow(scooter))"/>
 			</Template>
-			<EditTemplate Context="customer">
+			<EditTemplate Context="scooter">
 				<RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" 
-						Click="@(_ => SaveRow(customer))" aria-label="Save"/>
+						Click="@(_ => SaveRow(scooter))" aria-label="Save"/>
 				<RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" 
-						class="my-1 ms-1" Click="@(_ => CancelEdit(customer))" aria-label="Cancel"/>
+						class="my-1 ms-1" Click="@(_ => CancelEdit(scooter))" aria-label="Cancel"/>
 			</EditTemplate>
 		</RadzenDataGridColumn>
 	</Columns>
@@ -53,43 +45,43 @@
 	[Inject]
 	public DatabaseContext DbContext { get; set; } = null!;
 
-	public RadzenDataGrid<Customer> CustomersGrid { get; set; }
+	public RadzenDataGrid<Scooter> ScootersGrid { get; set; }
 
-	public DbSet<Customer> Customers => DbContext.Customers;
+	public DbSet<Scooter> Scooters => DbContext.Scooters;
 
 	public async Task InsertRow()
 	{
-		await CustomersGrid.InsertRow(new());
+		await ScootersGrid.InsertRow(new());
 	}
 
-	public async Task EditRow(Customer customer)
+	public async Task EditRow(Scooter scooter)
 	{
-		await CustomersGrid.EditRow(customer);
+		await ScootersGrid.EditRow(scooter);
 	}
 
-	public async Task CancelEdit(Customer customer)
+	public async Task CancelEdit(Scooter scooter)
 	{
-		CustomersGrid.CancelEditRow(customer);
+		ScootersGrid.CancelEditRow(scooter);
 	}
 
-	public async Task DeleteRow(Customer customer)
+	public async Task DeleteRow(Scooter scooter)
 	{
-		if (Customers.Contains(customer))
+		if (Scooters.Contains(scooter))
 		{
-			Customers.Remove(customer);
+			Scooters.Remove(scooter);
 			await DbContext.SaveChangesAsync();
 		}
-		CustomersGrid.CancelEditRow(customer);
-		await CustomersGrid.Reload();
+		ScootersGrid.CancelEditRow(scooter);
+		await ScootersGrid.Reload();
 	}
 
-	public async Task SaveRow(Customer customer)
+	public async Task SaveRow(Scooter scooter)
 	{
-		if (!Customers.Contains(customer))
+		if (!Scooters.Contains(scooter))
 		{
-			DbContext.Add(customer);
+			DbContext.Add(scooter);
 		}
 		await DbContext.SaveChangesAsync();
-		await CustomersGrid.UpdateRow(customer);
+		await ScootersGrid.UpdateRow(scooter);
 	}
 }

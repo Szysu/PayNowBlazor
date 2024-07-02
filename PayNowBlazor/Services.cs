@@ -1,6 +1,7 @@
 ﻿namespace PayNowBlazor;
 
-public static class ServiceProviderAccessor
+public class Services
 {
-    public static IServiceProvider ServiceProvider { get; set; }
+    public static IServiceProvider Provider { get; set; }
+    public static IConfiguration Configuration { get; set; }
 }

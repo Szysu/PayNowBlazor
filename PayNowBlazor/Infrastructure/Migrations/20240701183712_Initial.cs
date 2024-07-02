@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 #nullable disable
 
-namespace PayNowWeb.Infrastructure.Migrations
+namespace PayNowBlazor.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PayNowWeb.Infrastructure;
+using PayNowBlazor.Infrastructure;
 
-namespace PayNowWeb.Extensions;
+namespace PayNowBlazor.Extensions;
 
 public static class ServiceProviderExtensions
 {
-    public static DatabaseContext MigrateDatabase(this IServiceProvider serviceProvider)
+    public static DatabaseContext MigrateDatabase(this IServiceProvider services)
     {
-        var dbContext = serviceProvider.GetRequiredService<DatabaseContext>();
+        var dbContext = services.GetRequiredService<DatabaseContext>();
         dbContext.Database.Migrate();
 
         return dbContext;

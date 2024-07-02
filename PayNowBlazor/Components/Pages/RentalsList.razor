@@ -1,4 +1,4 @@
-﻿@page "/CustomersList"
+﻿@page "/RentalsList"
 @layout MainLayout
 
 @using Microsoft.EntityFrameworkCore
@@ -6,45 +6,15 @@
 @using PayNowBlazor.Infrastructure
 @using PayNowBlazor.Infrastructure.Entities
 
-<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Add new customer" Click="@InsertRow"/>
-<RadzenDataGrid @ref="CustomersGrid" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
-		AllowSorting="true" PageSize="10" AllowPaging="true" ShowPagingSummary="true" EditMode="DataGridEditMode.Single"
-		Data="@Customers" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or" 
-		SelectionMode="DataGridSelectionMode.Single">
+<RadzenDataGrid TItem="Rental" @ref="RentalsGrid" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" 
+		FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="10" AllowPaging="true" ShowPagingSummary="true"
+		Data="@Rentals" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or">
 	<Columns>
-		<RadzenDataGridColumn Property="@nameof(Customer.Id)" Title="ID" Filterable="true" Frozen="true" TextAlign="TextAlign.Center"/>
-		<RadzenDataGridColumn Property="@nameof(Customer.PhotoUrl)" Title="Photo" Filterable="false" Frozen="true" TextAlign="TextAlign.Center">
-			<Template Context="customer">
-				<RadzenImage Path="@customer.PhotoUrl" AlternateText="@($"{customer.FirstName} {customer.LastName}")" class="rz-gravatar"/>
-			</Template>
-			<EditTemplate Context="customer">
-				<RadzenTextBox @bind-value="customer.PhotoUrl"/>
-			</EditTemplate>
-		</RadzenDataGridColumn>
-		<RadzenDataGridColumn Property="@nameof(Customer.FirstName)" Title="First name" Filterable="true" Frozen="true" TextAlign="TextAlign.Center">
-			<EditTemplate Context="customer">
-				<RadzenTextBox @bind-value="customer.FirstName"/>
-			</EditTemplate>
-		</RadzenDataGridColumn>
-		<RadzenDataGridColumn Property="@nameof(Customer.LastName)" Title="Last name" Filterable="true" Frozen="true" TextAlign="TextAlign.Center">
-			<EditTemplate Context="customer">
-				<RadzenTextBox @bind-value="customer.LastName"/>
-			</EditTemplate>
-		</RadzenDataGridColumn>
-		<RadzenDataGridColumn Context="customer" Filterable="false" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
-			<Template Context="customer">
-				<RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" 
-						Click="@(_ => EditRow(customer))"/>
-				<RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter" 
-						Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(_ => DeleteRow(customer))"/>
-			</Template>
-			<EditTemplate Context="customer">
-				<RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" 
-						Click="@(_ => SaveRow(customer))" aria-label="Save"/>
-				<RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" 
-						class="my-1 ms-1" Click="@(_ => CancelEdit(customer))" aria-label="Cancel"/>
-			</EditTemplate>
-		</RadzenDataGridColumn>
+		<RadzenDataGridColumn Property="@nameof(Rental.Id)" Title="ID" Frozen="true" TextAlign="TextAlign.Center"/>
+		<RadzenDataGridColumn Property="@nameof(Rental.CustomerId)" Title="Customer ID" TextAlign="TextAlign.Center"/>
+		<RadzenDataGridColumn Property="@nameof(Rental.ScooterId)" Title="Scooter ID" TextAlign="TextAlign.Center"/>
+		<RadzenDataGridColumn Property="@nameof(Rental.StartDate)" Title="Start date" TextAlign="TextAlign.Center"/>
+		<RadzenDataGridColumn Property="@nameof(Rental.EndDate)" Title="End date" TextAlign="TextAlign.Center"/>
 	</Columns>
 </RadzenDataGrid>
 
@@ -53,43 +23,8 @@
 	[Inject]
 	public DatabaseContext DbContext { get; set; } = null!;
 
-	public RadzenDataGrid<Customer> CustomersGrid { get; set; }
+	public RadzenDataGrid<Rental> RentalsGrid { get; set; }
 
-	public DbSet<Customer> Customers => DbContext.Customers;
+	public DbSet<Rental> Rentals => DbContext.Rentals;
 
-	public async Task InsertRow()
-	{
-		await CustomersGrid.InsertRow(new());
-	}
-
-	public async Task EditRow(Customer customer)
-	{
-		await CustomersGrid.EditRow(customer);
-	}
-
-	public async Task CancelEdit(Customer customer)
-	{
-		CustomersGrid.CancelEditRow(customer);
-	}
-
-	public async Task DeleteRow(Customer customer)
-	{
-		if (Customers.Contains(customer))
-		{
-			Customers.Remove(customer);
-			await DbContext.SaveChangesAsync();
-		}
-		CustomersGrid.CancelEditRow(customer);
-		await CustomersGrid.Reload();
-	}
-
-	public async Task SaveRow(Customer customer)
-	{
-		if (!Customers.Contains(customer))
-		{
-			DbContext.Add(customer);
-		}
-		await DbContext.SaveChangesAsync();
-		await CustomersGrid.UpdateRow(customer);
-	}
 }

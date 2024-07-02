@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PayNowWeb.Infrastructure.Entities;
+using PayNowBlazor.Infrastructure.Entities;
 
-namespace PayNowWeb.Infrastructure.EntitiesConfiguration;
+namespace PayNowBlazor.Infrastructure.EntitiesConfiguration;
 
 public class ScooterEntityConfiguration : IEntityTypeConfiguration<Scooter>
 {
