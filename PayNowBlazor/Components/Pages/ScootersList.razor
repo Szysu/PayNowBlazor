@@ -7,7 +7,7 @@
 @using PayNowBlazor.Infrastructure.Entities
 
 <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Add new scooter" Click="@InsertRow"/>
-<RadzenDataGrid @ref="ScootersGrid" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+<RadzenDataGrid @ref="ScootersGrid" AllowFiltering="true" AllowColumnResize="true" AllowColumnReorder="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
 		AllowSorting="true" PageSize="10" AllowPaging="true" ShowPagingSummary="true" EditMode="DataGridEditMode.Single"
 		Data="@Scooters" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or" 
 		SelectionMode="DataGridSelectionMode.Single">

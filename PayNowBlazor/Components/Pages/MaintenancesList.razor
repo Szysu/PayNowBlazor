@@ -8,7 +8,7 @@
 
 <RadzenDataGrid @ref="MaintenancesGrid" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" 
 		FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="10" AllowPaging="true" ShowPagingSummary="true"
-		Data="@Maintenances" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or">
+		Data="@Maintenances" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or" AllowColumnReorder="true">
 	<Columns>
 		<RadzenDataGridColumn Property="@nameof(Maintenance.Id)" Title="ID" Frozen="true" TextAlign="TextAlign.Center"/>
 		<RadzenDataGridColumn Property="@nameof(Maintenance.ScooterId)" Title="Scooter ID" TextAlign="TextAlign.Center"/>

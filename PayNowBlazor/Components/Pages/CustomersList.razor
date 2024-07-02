@@ -1,6 +1,5 @@
 ﻿@page "/CustomersList"
 @layout MainLayout
-@rendermode InteractiveServer
 
 @using Microsoft.EntityFrameworkCore
 @using PayNowBlazor.Components.Layout
@@ -10,7 +9,7 @@
 <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Add new customer" Click="@InsertRow"/>
 <RadzenDataGrid @ref="CustomersGrid" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
 		AllowSorting="true" PageSize="10" AllowPaging="true" ShowPagingSummary="true" EditMode="DataGridEditMode.Single"
-		Data="@Customers" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or" 
+		Data="@Customers" ColumnWidth="100px" LogicalFilterOperator="LogicalFilterOperator.Or" AllowColumnReorder="true" 
 		SelectionMode="DataGridSelectionMode.Single">
 	<Columns>
 		<RadzenDataGridColumn Property="@nameof(Customer.Id)" Title="ID" Frozen="true" TextAlign="TextAlign.Center"/>
